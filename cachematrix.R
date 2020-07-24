@@ -1,15 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+#Assignment
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function(x = matrix()) { #contains 4 functions set/get/setmean/getmean
+        i <- NULL
+        set <- function(y) {    #assigns input y to x in makeVector environment, for easy customisation
+                x <<- y         #cleans m
+                i <<- NULL
+        }
+        get <- function() x     #returns the value of x
+        setinverse <- function(inverse) i <<- inverse
+        getinverse <- function() i
+        list(set = set, get = get,
+             setinverse = setinverse,
+             getinverse = getinverse)
 }
-
-
-## Write a short comment describing this function
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        i <- x$getinverse()        #Calls the getinverse() function on the input object.
+        if(!is.null(i)) {
+                message("getting cached data")
+                return(i)
+        }
+        data <- x$get()         #get the original matrix from makeCacheMatrix()
+        i <- solve(data, ...)
+        x$setinverse(i)            #input m value into setmean function which is stored as m in makeVector
+        i
 }
+
+
+
+
+
+
+
+
